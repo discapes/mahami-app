@@ -13,6 +13,7 @@ export default {
 		large: 32,
 		medium: 26,
 		small: 22,
+		smaller: 20,
 		xsmall: 16,
 	},
 	font: {
