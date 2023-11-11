@@ -54,6 +54,8 @@ function App(): JSX.Element {
 						backgroundColor: isDarkMode ? Colors.black : Colors.white,
 					}}>
 						<Text style={styles.text}>
+							Great Job, Bob
+							You have earned 34 minutes extra screen time today!
 							{result}
 						</Text>
 				</View>
@@ -64,8 +66,9 @@ function App(): JSX.Element {
 
 const styles = StyleSheet.create({
 	text: {
-		fontSize: 138,
-		fontFamily: "HarmonyOS Sans, Regular"
+		fontSize: 40,
+		fontFamily: "HarmonyOS Sans, Regular",
+		backgroundColor: "transparent"
 	},
 });
 export default App;
