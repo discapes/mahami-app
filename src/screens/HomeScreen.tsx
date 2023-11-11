@@ -17,6 +17,8 @@ import SectionContainer from '../components/SectionContainer';
 
 const { StepModule } = NativeModules;
 
+import ConfettiCannon from 'react-native-confetti-cannon';
+
 interface HomeScreenProps {
 	navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 }
@@ -55,7 +57,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			<View>
 				<View style={styles.welcomeTextContainer}>
-					<Text style={styles.header}>Great Job, Bob 🎉</Text>
+					<Text style={styles.header}>Great job, Bob 🎉</Text>
 					<Text style={styles.header}>
 						You have earned{' '}
 						<Text style={{ fontWeight: 'bold', color: theme.colors.blue }}>
@@ -76,7 +78,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							progress={percentAllowanceMinutesUsed}
 							color={theme.colors.blue}
 						/>
-						<Text>
+						<Text style={styles.progressText}>
 							{allowanceMinutesUsed} / {allowanceMinutes} minutes used
 						</Text>
 						<Text style={styles.screenTimeSubtitle}>Earned extra</Text>
@@ -84,11 +86,18 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							progress={percentEarnedExtraMinutesUsed}
 							color={theme.colors.blue}
 						/>
-						<Text>
+						<Text style={styles.progressText}>
 							{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
 						</Text>
 					</Section>
 				</SectionContainer>
+				{minutesEarnedToday > 50 && (
+					<ConfettiCannon
+						count={200}
+						origin={{ x: 0, y: 0 }}
+						autoStart={true}
+					/>
+				)}
 			</View>
 		</ScrollView>
 	);
@@ -107,5 +116,8 @@ const styles = StyleSheet.create({
 		fontSize: theme.fontSize.smaller,
 		color: theme.colors.text,
 		marginVertical: 8,
+	},
+	progressText: {
+		marginTop: 6,
 	},
 });
