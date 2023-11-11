@@ -6,21 +6,25 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
-import  com.facebook.react.bridge.WritableArray;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors;
+import android.content.Intent;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.os.Build;
+import android.provider.Settings;
 
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.provider.Settings;
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.WritableArray;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 
 import androidx.annotation.RequiresApi;
 
@@ -40,6 +44,19 @@ public class StepModule extends ReactContextBaseJavaModule {
         Context ctx = getReactApplicationContext().getApplicationContext();
      //   Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
      //   ctx.startActivity(intent);
+        SensorManager sm = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
+        Sensor stepCounter = sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        sm.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                promise.resolve(sensorEvent.values[0]);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        }, stepCounter, SensorManager.SENSOR_DELAY_NORMAL);
 
         UsageStatsManager usm = (UsageStatsManager) ctx.getSystemService(Context.USAGE_STATS_SERVICE);
 
@@ -63,6 +80,6 @@ public class StepModule extends ReactContextBaseJavaModule {
         WritableArray wArr = Arguments.createArray();
         names.forEach(name -> wArr.pushString(name));
 
-        promise.resolve(wArr);
+        //promise.resolve(wArr);
     }
 }
