@@ -27,19 +27,11 @@ export default function App(): JSX.Element {
 					backgroundColor={theme.colors.background}
 				/>
 				<Stack.Navigator
-					screenOptions={{ headerShown: false }}
 					initialRouteName="Home">
-					<Stack.Screen name="Home" component={HomeScreen} />
-					<Stack.Screen name="Minutes" component={MinutesScreen} />
+					<Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
+					<Stack.Screen options={{ title: 'Earned minutes', headerTitleStyle: styles.header, headerShadowVisible: false, headerStyle: {backgroundColor: theme.colors.background}}}name="Minutes" component={MinutesScreen} />
 				</Stack.Navigator>
 
-				<View
-					style={{
-						backgroundColor: theme.colors.element,
-						height: '10%',
-					}}>
-					<Text>Moi</Text>
-				</View>
 			</SafeAreaView>
 		</NavigationContainer>
 	);

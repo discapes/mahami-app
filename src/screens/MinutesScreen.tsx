@@ -14,9 +14,6 @@ export default function PointsScreen(): JSX.Element {
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			<View>
-				<Text style={styles.header}>
-					Earned Minutes
-				</Text>
 				<SectionContainer>
 					<Section title="Sleep" titleStyle={{color: theme.colors.sleep}} data="45 minutes">
 						<Text>Your sleep score for the last night was 86 which earns you <Text style={{color: theme.colors.sleep}}>45</Text> minutes</Text>
@@ -36,12 +33,6 @@ export default function PointsScreen(): JSX.Element {
 	);
 }
 const styles = StyleSheet.create({
-	header: {
-		padding: 20,
-		fontSize: 30,
-		fontFamily: 'HarmonyOS Sans, Regular',
-		color: theme.colors.text,
-	},
 	text: {
 		fontSize: 14,
 		fontFamily: 'HarmonyOS Sans, Regular',
