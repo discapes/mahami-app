@@ -4,7 +4,7 @@ import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
+import { HomeScreen } from './src/screens/HomeScreen';
 import PointsScreen from './src/screens/PointsScreen';
 import theme from './theme';
 

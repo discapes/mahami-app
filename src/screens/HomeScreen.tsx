@@ -1,3 +1,4 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import {
 	NativeEventEmitter,
@@ -5,14 +6,20 @@ import {
 	ScrollView,
 	StyleSheet,
 	Text,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 import theme from '../../theme';
 import Section from '../components/Section';
+import SectionContainer from '../components/SectionContainer';
 
 const { StepModule } = NativeModules;
 
-export default function HomeScreen(): JSX.Element {
+interface HomeScreenProps {
+	navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
+}
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 	const [usage, setUsage] = useState<string[]>([]);
 	const [steps, setSteps] = useState<number | 'loading steps...'>(
 		'loading steps...',
@@ -38,21 +45,20 @@ export default function HomeScreen(): JSX.Element {
 				<Text style={styles.header}>
 					Great Job, Bob You have earned 34 minutes extra screen time today!
 				</Text>
-				<Section title="Steps">{steps}</Section>
-				<Section title="Usage">
-					Top 10 packages (unsorted):
-					<View style={{ gap: 3, padding: 10 }}>
-						{usage.slice(0, 10).map(pkg => (
-							<Text key={pkg} style={styles.text}>
-								Name: {pkg}
-							</Text>
-						))}
-					</View>
-				</Section>
+				<SectionContainer>
+					<TouchableOpacity onPress={() => navigation.navigate('Points')}>
+						<Section title="Earned points breakdown">
+							<Text>Earned points breakdown content here</Text>
+						</Section>
+					</TouchableOpacity>
+					<Section title="Screen time">
+						<Text>Screen time content here</Text>
+					</Section>
+				</SectionContainer>
 			</View>
 		</ScrollView>
 	);
-}
+};
 const styles = StyleSheet.create({
 	header: {
 		padding: 20,
