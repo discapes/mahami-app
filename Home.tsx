@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import Colors from './Colors';
 
+import type {PropsWithChildren} from 'react';
+
 const {StepModule} = NativeModules;
+type SectionProps = PropsWithChildren<{
+	title: string;
+}>;
 
 function Section({children, title}: SectionProps): JSX.Element {
 	return (
