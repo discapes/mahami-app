@@ -20,41 +20,12 @@ import {
 
 import {
 	Colors,
-	DebugInstructions,
-	Header,
-	LearnMoreLinks,
-	ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
 	title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-	const isDarkMode = useColorScheme() === 'dark';
-	return (
-		<View style={styles.sectionContainer}>
-			<Text
-				style={[
-					styles.sectionTitle,
-					{
-						color: isDarkMode ? Colors.white : Colors.black,
-					},
-				]}>
-				{title}
-			</Text>
-			<Text
-				style={[
-					styles.sectionDescription,
-					{
-						color: isDarkMode ? Colors.light : Colors.dark,
-					},
-				]}>
-				{children}
-			</Text>
-		</View>
-	);
-}
 
 const {StepModule} = NativeModules;
 
@@ -83,7 +54,7 @@ function App(): JSX.Element {
 						backgroundColor: isDarkMode ? Colors.black : Colors.white,
 					}}>
 						<Text style={styles.text}>
-							Moro
+							{result}
 						</Text>
 				</View>
 			</ScrollView>
