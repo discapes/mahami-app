@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import theme from '../../theme';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
@@ -43,6 +43,7 @@ export default function PointsScreen(): JSX.Element {
 							<Text style={{ color: theme.colors.orange }}>20</Text> minutes.
 						</Text>
 					</Section>
+					<TouchableOpacity onPress={() => navigation.navigate('Minutes')}>
 					<Section title="How it works">
 						<Text style={styles.text}>
 							You can earn more screen time by completing activities, walking
@@ -51,6 +52,7 @@ export default function PointsScreen(): JSX.Element {
 							and change how you get points.
 						</Text>
 					</Section>
+					</TouchableOpacity>
 				</SectionContainer>
 			</View>
 		</ScrollView>

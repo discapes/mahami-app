@@ -76,7 +76,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							progress={percentAllowanceMinutesUsed}
 							color={theme.colors.blue}
 						/>
-						<Text>
+						<Text style={{color: theme.colors.text}} >
 							{allowanceMinutesUsed} / {allowanceMinutes} minutes used
 						</Text>
 						<Text style={styles.screenTimeSubtitle}>Earned extra</Text>
@@ -84,7 +84,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							progress={percentEarnedExtraMinutesUsed}
 							color={theme.colors.blue}
 						/>
-						<Text>
+						<Text style={{color: theme.colors.text}}>
 							{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
 						</Text>
 					</Section>
