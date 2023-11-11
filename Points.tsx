@@ -16,7 +16,7 @@ export default function Points(): JSX.Element {
     return(
         <View>
         <Text>
-            POints here
+            Points here.
         </Text>
         </View>
     );

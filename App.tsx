@@ -17,7 +17,7 @@ import {
 	View,
 	NativeModules,
 } from 'react-native';
-
+import { NavigationContainer } from "@react-navigation/native";
 import {
 	Colors,
 } from 'react-native/Libraries/NewAppScreen';
@@ -41,6 +41,7 @@ function App(): JSX.Element {
 	};
 
 	return (
+		<NavigationContainer>
 		<SafeAreaView style={backgroundStyle}>
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -61,6 +62,7 @@ function App(): JSX.Element {
 				</View>
 			</ScrollView>
 		</SafeAreaView>
+		</NavigationContainer>
 	);
 }
 
