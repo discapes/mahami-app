@@ -15,9 +15,9 @@ export default function PointsScreen(): JSX.Element {
 				<SectionContainer>
 					<Section
 						title="Sleep"
+						icon={<Moon />}
 						titleStyle={{ color: theme.colors.blue }}
 						data="45 minutes">
-							<Moon />
 						<Text style={styles.text}>
 							Your sleep score for the last night was 86 which earns you{' '}
 							<Text style={{ color: theme.colors.blue }}>45</Text> minutes
@@ -25,9 +25,9 @@ export default function PointsScreen(): JSX.Element {
 					</Section>
 					<Section
 						title="Steps"
+						icon={<Shoe />}
 						titleStyle={{ color: theme.colors.green }}
 						data="39 minutes">
-							<Shoe />
 						<Text style={styles.text}>
 							You have taken 5914 steps today, which earns you{' '}
 							<Text style={{ color: theme.colors.green }}> 39</Text> minutes
@@ -35,9 +35,9 @@ export default function PointsScreen(): JSX.Element {
 					</Section>
 					<Section
 						title="Excercise"
+						icon={<Basketball />}
 						titleStyle={{ color: theme.colors.orange }}
 						data="20 minutes">
-							<Basketball />
 						<Text style={styles.text}>
 							You have completed 63% of your excercise goal, which earns you{' '}
 							<Text style={{ color: theme.colors.orange }}>20</Text> minutes.
