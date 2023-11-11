@@ -10,6 +10,7 @@ import {
 	View,
 } from 'react-native';
 import theme from '../../theme';
+import BreakdownVisualization from '../components/BreakdownVisualization';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
 
@@ -39,16 +40,25 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 		};
 	}, []);
 
+	const minutesEarnedToday = 105;
+
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			<View>
-				<Text style={styles.header}>
-					Great Job, Bob You have earned 34 minutes extra screen time today!
-				</Text>
+				<View style={styles.welcomeTextContainer}>
+					<Text style={styles.header}>Great Job, Bob 🎉</Text>
+					<Text style={styles.header}>
+						You have earned{' '}
+						<Text style={{ fontWeight: 'bold', color: theme.colors.blue }}>
+							{minutesEarnedToday} minutes
+						</Text>{' '}
+						extra screen time today!
+					</Text>
+				</View>
 				<SectionContainer>
 					<TouchableOpacity onPress={() => navigation.navigate('Minutes')}>
 						<Section title="Earned minutes breakdown">
-							<Text>Earned minutes breakdown content here</Text>
+							<BreakdownVisualization sleep={45} exercise={20} steps={39} />
 						</Section>
 					</TouchableOpacity>
 					<Section title="Screen time">
@@ -61,14 +71,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
 	header: {
-		padding: 20,
-		fontSize: 30,
+		fontSize: theme.fontSize.large,
 		fontFamily: 'HarmonyOS Sans, Regular',
 		color: theme.colors.text,
 	},
-	text: {
-		fontSize: 14,
-		fontFamily: 'HarmonyOS Sans, Regular',
-		color: theme.colors.text,
+	welcomeTextContainer: {
+		padding: 20,
+		paddingBottom: 10,
 	},
 });
