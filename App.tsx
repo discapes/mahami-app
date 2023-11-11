@@ -1,21 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
-	Text,
-	View,
-	NativeModules,
-	NativeEventEmitter,
-} from 'react-native';
+import type { PropsWithChildren } from 'react';
+import React from 'react';
+import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Colors from './Colors';
-import Points from './Points';
-import Home from './Home';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './src/screens/HomeScreen';
+import PointsScreen from './src/screens/PointsScreen';
+import theme from './theme';
 
 type SectionProps = PropsWithChildren<{
 	title: string;
@@ -28,47 +19,48 @@ export default function App(): JSX.Element {
 		<NavigationContainer>
 			<SafeAreaView
 				style={{
-					backgroundColor: Colors.background,
+					backgroundColor: theme.colors.background,
 					flex: 1,
 				}}>
 				<StatusBar
 					barStyle={'dark-content'}
-					backgroundColor={Colors.background}
+					backgroundColor={theme.colors.background}
 				/>
-				<Stack.Navigator screenOptions={{headerShown: false}}initialRouteName="Home">
-					<Stack.Screen name="Home" component={Home} />
-					<Stack.Screen name="Points" component={Points} />
+				<Stack.Navigator
+					screenOptions={{ headerShown: false }}
+					initialRouteName="Home">
+					<Stack.Screen name="Home" component={HomeScreen} />
+					<Stack.Screen name="Points" component={PointsScreen} />
 				</Stack.Navigator>
 
 				<View
 					style={{
-						backgroundColor: Colors.element,
+						backgroundColor: theme.colors.element,
 						height: '10%',
 					}}>
-						<Text>Moi</Text>
-					</View>
+					<Text>Moi</Text>
+				</View>
 			</SafeAreaView>
 		</NavigationContainer>
 	);
 }
-
 
 const styles = StyleSheet.create({
 	header: {
 		padding: 20,
 		fontSize: 30,
 		fontFamily: 'HarmonyOS Sans, Regular',
-		color: Colors.text,
+		color: theme.colors.text,
 	},
 	text: {
 		fontSize: 14,
 		fontFamily: 'HarmonyOS Sans, Regular',
-		color: Colors.text,
+		color: theme.colors.text,
 	},
 	sectionContainer: {
 		marginTop: 32,
 		paddingHorizontal: 24,
-		backgroundColor: Colors.element,
+		backgroundColor: theme.colors.element,
 		margin: 20,
 		borderRadius: 100,
 	},

@@ -1,48 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+	NativeEventEmitter,
+	NativeModules,
 	ScrollView,
+	StyleSheet,
 	Text,
 	View,
-	NativeModules,
-	NativeEventEmitter,
-    StyleSheet
 } from 'react-native';
-import Colors from './Colors';
+import theme from '../../theme';
+import Section from '../components/Section';
 
-import type {PropsWithChildren} from 'react';
+const { StepModule } = NativeModules;
 
-const {StepModule} = NativeModules;
-type SectionProps = PropsWithChildren<{
-	title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-	return (
-		<View style={styles.sectionContainer}>
-			<Text
-				style={[
-					styles.sectionTitle,
-					{
-						color: Colors.text,
-					},
-				]}>
-				{title}
-			</Text>
-			<Text
-				style={[
-					styles.sectionDescription,
-					{
-						color: Colors.text,
-					},
-				]}>
-				{children}
-			</Text>
-		</View>
-	);
-}
-
-
-export default function Home(): JSX.Element {
+export default function HomeScreen(): JSX.Element {
 	const [usage, setUsage] = useState<string[]>([]);
 	const [steps, setSteps] = useState<number | 'loading steps...'>(
 		'loading steps...',
@@ -71,7 +41,7 @@ export default function Home(): JSX.Element {
 				<Section title="Steps">{steps}</Section>
 				<Section title="Usage">
 					Top 10 packages (unsorted):
-					<View style={{gap: 3, padding: 10}}>
+					<View style={{ gap: 3, padding: 10 }}>
 						{usage.slice(0, 10).map(pkg => (
 							<Text key={pkg} style={styles.text}>
 								Name: {pkg}
@@ -88,30 +58,11 @@ const styles = StyleSheet.create({
 		padding: 20,
 		fontSize: 30,
 		fontFamily: 'HarmonyOS Sans, Regular',
-		color: Colors.text,
+		color: theme.colors.text,
 	},
 	text: {
 		fontSize: 14,
 		fontFamily: 'HarmonyOS Sans, Regular',
-		color: Colors.text,
-	},
-	sectionContainer: {
-		marginTop: 32,
-		paddingHorizontal: 24,
-		backgroundColor: Colors.element,
-		margin: 20,
-		borderRadius: 100,
-	},
-	sectionTitle: {
-		fontSize: 24,
-		fontWeight: '600',
-	},
-	sectionDescription: {
-		marginTop: 8,
-		fontSize: 18,
-		fontWeight: '400',
-	},
-	highlight: {
-		fontWeight: '700',
+		color: theme.colors.text,
 	},
 });
