@@ -16,7 +16,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Colors from './Colors';
 import Points from './Points';
 import Home from './Home';
-const {StepModule} = NativeModules;
 
 type SectionProps = PropsWithChildren<{
 	title: string;
@@ -36,7 +35,7 @@ export default function App(): JSX.Element {
 					barStyle={'dark-content'}
 					backgroundColor={Colors.background}
 				/>
-				<Stack.Navigator initialRouteName="Home">
+				<Stack.Navigator screenOptions={{headerShown: false}}initialRouteName="Home">
 					<Stack.Screen name="Home" component={Home} />
 					<Stack.Screen name="Points" component={Points} />
 				</Stack.Navigator>
