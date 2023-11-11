@@ -20,7 +20,7 @@ export default function Section({
 	return (
 		<View style={styles.sectionContainer}>
 			<Text style={styles.sectionTitle}>{title}</Text>
-			<View style={styles.sectionDescription}>{children}</View>
+			<View style={styles.sectionChildrenRoot}>{children}</View>
 		</View>
 	);
 }
@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
 	sectionTitle: {
 		fontSize: 24,
 		color: theme.colors.text,
+		marginVertical: 5,
 	},
-	sectionDescription: {
+	sectionChildrenRoot: {
 		marginTop: 8,
 		fontSize: 18,
 		color: theme.colors.text,
 		alignContent: 'stretch',
-		alignItems: 'center',
 	},
 	highlight: {
 		fontWeight: '700',
