@@ -1,3 +1,4 @@
+import React from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import theme from '../../theme';
 
@@ -6,15 +7,18 @@ interface ProgressBarProps {
 	color: string;
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = (): JSX.Element => {
+export const ProgressBar: React.FC<ProgressBarProps> = ({
+	progress,
+	color,
+}): JSX.Element => {
 	return (
 		<View style={styles.progressBar}>
 			<Animated.View
 				style={[
 					StyleSheet.absoluteFill,
 					{
-						backgroundColor: theme.colors.blue,
-						width: '50%',
+						backgroundColor: color,
+						width: `${progress}%`,
 						borderRadius: 50,
 					},
 				]}
