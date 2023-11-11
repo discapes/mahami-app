@@ -46,9 +46,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 					Great Job, Bob You have earned 34 minutes extra screen time today!
 				</Text>
 				<SectionContainer>
-					<TouchableOpacity onPress={() => navigation.navigate('Points')}>
-						<Section title="Earned points breakdown">
-							<Text>Earned points breakdown content here</Text>
+					<TouchableOpacity onPress={() => navigation.navigate('Minutes')}>
+						<Section title="Earned minutes breakdown">
+							<Text>Earned minutes breakdown content here</Text>
 						</Section>
 					</TouchableOpacity>
 					<Section title="Screen time">

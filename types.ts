@@ -1,4 +1,4 @@
 type RootStackParamList = {
 	Home: undefined;
-	Points: undefined;
+	Minutes: undefined;
 };

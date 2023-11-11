@@ -5,7 +5,7 @@ import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './src/screens/HomeScreen';
-import PointsScreen from './src/screens/PointsScreen';
+import MinutesScreen from './src/screens/MinutesScreen';
 import theme from './theme';
 
 type SectionProps = PropsWithChildren<{
@@ -30,7 +30,7 @@ export default function App(): JSX.Element {
 					screenOptions={{ headerShown: false }}
 					initialRouteName="Home">
 					<Stack.Screen name="Home" component={HomeScreen} />
-					<Stack.Screen name="Points" component={PointsScreen} />
+					<Stack.Screen name="Minutes" component={MinutesScreen} />
 				</Stack.Navigator>
 
 				<View
