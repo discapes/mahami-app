@@ -1,10 +1,12 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import theme from '../../theme';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
 
-import moon from '../../assets/img/moon.svg';
+import Moon from '../../assets/img/moon';
+import Shoe from '../../assets/img/shoe';
+import Basketball from '../../assets/img/basketball'
 
 export default function PointsScreen(): JSX.Element {
 	return (
@@ -15,6 +17,7 @@ export default function PointsScreen(): JSX.Element {
 						title="Sleep"
 						titleStyle={{ color: theme.colors.blue }}
 						data="45 minutes">
+							<Moon />
 						<Text style={styles.text}>
 							Your sleep score for the last night was 86 which earns you{' '}
 							<Text style={{ color: theme.colors.blue }}>45</Text> minutes
@@ -24,6 +27,7 @@ export default function PointsScreen(): JSX.Element {
 						title="Steps"
 						titleStyle={{ color: theme.colors.green }}
 						data="39 minutes">
+							<Shoe />
 						<Text style={styles.text}>
 							You have taken 5914 steps today, which earns you{' '}
 							<Text style={{ color: theme.colors.green }}> 39</Text> minutes
@@ -33,6 +37,7 @@ export default function PointsScreen(): JSX.Element {
 						title="Excercise"
 						titleStyle={{ color: theme.colors.orange }}
 						data="20 minutes">
+							<Basketball />
 						<Text style={styles.text}>
 							You have completed 63% of your excercise goal, which earns you{' '}
 							<Text style={{ color: theme.colors.orange }}>20</Text> minutes.
