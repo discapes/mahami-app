@@ -1,4 +1,5 @@
 package com.mahamimobile; // replace your-apps-package-name with your app’s package name
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
@@ -13,15 +14,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors;
+
 import android.content.Intent;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Build;
-import android.provider.Settings;
 
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
@@ -62,10 +64,7 @@ public class StepModule extends ReactContextBaseJavaModule {
         endCal.set(Calendar.MONTH, 0);
         endCal.set(Calendar.YEAR, 2040);
 
-        List<UsageStats> usList = usageStatsManager.queryUsageStats(
-                UsageStatsManager.INTERVAL_YEARLY,
-                beginCal.getTimeInMillis(),
-                endCal.getTimeInMillis());
+        List<UsageStats> usList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY, beginCal.getTimeInMillis(), endCal.getTimeInMillis());
 
         List<String> names = usList.stream().map(us -> us.getPackageName()).collect(Collectors.toList());
 
@@ -74,18 +73,8 @@ public class StepModule extends ReactContextBaseJavaModule {
         promise.resolve(wArr);
     }
 
-    private void sendEvent(String eventName,
-                           @Nullable WritableMap params) {
-        rctx
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @ReactMethod
-    public void getSteps() {
-
+    public void sendEvent(String eventName, @Nullable WritableMap params) {
+        rctx.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
 
     private int listenerCount = 0;
@@ -103,6 +92,7 @@ public class StepModule extends ReactContextBaseJavaModule {
                 params.putDouble("steps", sensorEvent.values[0]);
                 sendEvent("stepsChanged", params);
             }
+
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) {
 
@@ -121,6 +111,40 @@ public class StepModule extends ReactContextBaseJavaModule {
         listenerCount -= count;
         if (listenerCount == 0) {
             // Remove upstream listeners, stop unnecessary background tasks
+        }
+    }
+
+    @ReactMethod
+    public void changeSetting(String fieldName, int value) {
+        Settings settings = Settings.USER_SETTINGS;
+        switch (fieldName) {
+            case "sleepGoal":
+                settings.sleepGoal = value;
+                break;
+            case "sleepReward":
+                settings.sleepReward = value;
+                break;
+            case "stepGoal":
+                settings.stepGoal = value;
+                break;
+            case "stepReward":
+                settings.stepReward = value;
+                break;
+            case "exerciseGoal":
+                settings.exerciseGoal = value;
+                break;
+            case "exerciseReward":
+                settings.exerciseReward = value;
+                break;
+            case "minScreenMinutes":
+                settings.minScreenMinutes = value;
+                break;
+            case "maxScreenMinutes":
+                settings.maxScreenMinutes = value;
+                break;
+            default:
+                System.out.println("Invalid field name: " + fieldName);
+                break;
         }
     }
 }
