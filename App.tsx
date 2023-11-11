@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -31,7 +31,6 @@ export default function App(): JSX.Element {
 					<Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
 					<Stack.Screen options={{ title: 'Earned minutes', headerTitleStyle: styles.header, headerShadowVisible: false, headerStyle: {backgroundColor: theme.colors.background}}}name="Minutes" component={MinutesScreen} />
 				</Stack.Navigator>
-
 			</SafeAreaView>
 		</NavigationContainer>
 	);
