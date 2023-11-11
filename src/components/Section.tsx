@@ -3,6 +3,7 @@ import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
 import type { PropsWithChildren } from 'react';
 import theme from '../../theme';
+import MyText from './MyText';
 
 type SectionProps = PropsWithChildren<{
 	title: string;
@@ -22,9 +23,9 @@ export default function Section({
 	return (
 		<View style={styles.sectionContainer}>
 			<View style={styles.sectionHeader}>
-				<Text style={textStyle}>
+				<MyText style={textStyle}>
 					{title} {icon}
-				</Text>
+				</MyText>
 				<Text style={[styles.sectionTitle, textStyle]}>{data}</Text>
 			</View>
 			<View style={styles.sectionDescription}>{children}</View>

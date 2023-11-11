@@ -5,7 +5,7 @@ import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './src/screens/HomeScreen';
-import MinutesScreen from './src/screens/MinutesScreen';
+import { MinutesScreen } from './src/screens/MinutesScreen';
 import theme from './theme';
 
 type SectionProps = PropsWithChildren<{
@@ -26,10 +26,22 @@ export default function App(): JSX.Element {
 					barStyle={'dark-content'}
 					backgroundColor={theme.colors.background}
 				/>
-				<Stack.Navigator
-					initialRouteName="Home">
-					<Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-					<Stack.Screen options={{ title: 'Earned minutes', headerTitleStyle: styles.header, headerShadowVisible: false, headerStyle: {backgroundColor: theme.colors.background}}}name="Minutes" component={MinutesScreen} />
+				<Stack.Navigator initialRouteName="Home">
+					<Stack.Screen
+						options={{ headerShown: false }}
+						name="Home"
+						component={HomeScreen}
+					/>
+					<Stack.Screen
+						options={{
+							title: 'Earned minutes',
+							headerTitleStyle: styles.header,
+							headerShadowVisible: false,
+							headerStyle: { backgroundColor: theme.colors.background },
+						}}
+						name="Minutes"
+						component={MinutesScreen}
+					/>
 				</Stack.Navigator>
 			</SafeAreaView>
 		</NavigationContainer>

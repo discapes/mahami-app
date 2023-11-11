@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type { PropsWithChildren } from 'react';
 import theme from '../../theme';
+import MyText from './MyText';
 
 type BreakdownVisualizationProps = PropsWithChildren<{
 	sleep: number;
@@ -18,16 +19,16 @@ export default function BreakdownVisualization({
 	return (
 		<View style={styles.rootContainer}>
 			<View style={[styles.exercise, styles.block, styles.topBlock]}>
-				<Text style={styles.categoryText}>Exercise</Text>
-				<Text style={styles.categoryValue}>{exercise} minutes</Text>
+				<MyText style={styles.categoryText}>Exercise</MyText>
+				<MyText style={styles.categoryValue}>{exercise} minutes</MyText>
 			</View>
 			<View style={[styles.steps, styles.block]}>
-				<Text style={styles.categoryText}>Steps</Text>
-				<Text style={styles.categoryValue}>{steps} minutes</Text>
+				<MyText style={styles.categoryText}>Steps</MyText>
+				<MyText style={styles.categoryValue}>{steps} minutes</MyText>
 			</View>
 			<View style={[styles.sleep, styles.block, styles.bottomBlock]}>
-				<Text style={styles.categoryText}>Sleep</Text>
-				<Text style={styles.categoryValue}>{sleep} minutes</Text>
+				<MyText style={styles.categoryText}>Sleep</MyText>
+				<MyText style={styles.categoryValue}>{sleep} minutes</MyText>
 			</View>
 		</View>
 	);
