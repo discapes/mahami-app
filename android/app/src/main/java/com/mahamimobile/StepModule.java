@@ -1,5 +1,6 @@
 package com.mahamimobile; // replace your-apps-package-name with your app’s package name
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -23,12 +24,20 @@ import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 public class StepModule extends ReactContextBaseJavaModule {
+    ReactContext rctx = getReactApplicationContext();
+    Context ctx = rctx.getApplicationContext();
+
     StepModule(ReactApplicationContext context) {
         super(context);
     }
@@ -40,25 +49,8 @@ public class StepModule extends ReactContextBaseJavaModule {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @ReactMethod
-    public void getSteps(Promise promise) {
-        Context ctx = getReactApplicationContext().getApplicationContext();
-     //   Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-     //   ctx.startActivity(intent);
-        SensorManager sm = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
-        Sensor stepCounter = sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        sm.registerListener(new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent sensorEvent) {
-                promise.resolve(sensorEvent.values[0]);
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
-
-            }
-        }, stepCounter, SensorManager.SENSOR_DELAY_NORMAL);
-
-        UsageStatsManager usm = (UsageStatsManager) ctx.getSystemService(Context.USAGE_STATS_SERVICE);
+    public void getUsage(Promise promise) {
+        UsageStatsManager usageStatsManager = (UsageStatsManager) ctx.getSystemService(Context.USAGE_STATS_SERVICE);
 
         Calendar beginCal = Calendar.getInstance();
         beginCal.set(Calendar.DATE, 1);
@@ -70,7 +62,7 @@ public class StepModule extends ReactContextBaseJavaModule {
         endCal.set(Calendar.MONTH, 0);
         endCal.set(Calendar.YEAR, 2040);
 
-        List<UsageStats> usList = usm.queryUsageStats(
+        List<UsageStats> usList = usageStatsManager.queryUsageStats(
                 UsageStatsManager.INTERVAL_YEARLY,
                 beginCal.getTimeInMillis(),
                 endCal.getTimeInMillis());
@@ -79,7 +71,56 @@ public class StepModule extends ReactContextBaseJavaModule {
 
         WritableArray wArr = Arguments.createArray();
         names.forEach(name -> wArr.pushString(name));
+        promise.resolve(wArr);
+    }
 
-        //promise.resolve(wArr);
+    private void sendEvent(String eventName,
+                           @Nullable WritableMap params) {
+        rctx
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @ReactMethod
+    public void getSteps() {
+
+    }
+
+    private int listenerCount = 0;
+
+    @ReactMethod
+    public void addListener(String eventName) {
+        SensorManager sensorManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
+        Sensor stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+
+        sensorManager.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                Log.i("steps", "Event!!");
+                WritableMap params = Arguments.createMap();
+                params.putDouble("steps", sensorEvent.values[0]);
+                sendEvent("stepsChanged", params);
+            }
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        }, stepCounter, SensorManager.SENSOR_DELAY_NORMAL);
+
+        if (listenerCount == 0) {
+            // Set up any upstream listeners or background tasks as necessary
+        }
+
+        listenerCount += 1;
+    }
+
+    @ReactMethod
+    public void removeListeners(Integer count) {
+        listenerCount -= count;
+        if (listenerCount == 0) {
+            // Remove upstream listeners, stop unnecessary background tasks
+        }
     }
 }
