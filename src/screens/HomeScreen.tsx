@@ -90,6 +90,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
 						</Text>
 					</Section>
+					<TouchableOpacity onPress={() => navigation.navigate('Parental')}>
+						<Section title="Parental Controls"/>
+					</TouchableOpacity>
 				</SectionContainer>
 				{minutesEarnedToday > 50 && (
 					<ConfettiCannon
