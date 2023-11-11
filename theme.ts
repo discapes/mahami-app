@@ -5,7 +5,7 @@ export default {
 		text: '#000000',
 		highlight: '#317AF7',
 		excercise: '#FB8C00',
-		Steps: '#A5D61D',
-		Sleep: '#317AF7',
+		steps: '#A5D61D',
+		sleep: '#317AF7',
 	},
 };
