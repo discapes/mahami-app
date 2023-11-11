@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
 	SafeAreaView,
@@ -15,6 +15,7 @@ import {
 	Text,
 	useColorScheme,
 	View,
+	NativeModules,
 } from 'react-native';
 
 import {
@@ -55,8 +56,14 @@ function Section({children, title}: SectionProps): JSX.Element {
 	);
 }
 
+const {StepModule} = NativeModules;
+
 function App(): JSX.Element {
 	const isDarkMode = useColorScheme() === 'dark';
+	const [result, setResult] = useState<string>('loading...');
+	useEffect(() => {
+		StepModule.getSteps().then((steps: string) => setResult(steps));
+	}, []);
 
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -78,7 +85,7 @@ function App(): JSX.Element {
 					}}>
 					<Section title="Step One">
 						Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-						screen and then come back to see your edits.
+						screen and then come back to see your edits. {result}
 					</Section>
 					<Section title="See Your Changes">
 						<ReloadInstructions />
