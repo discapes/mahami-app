@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import theme from '../../theme';
 import BreakdownVisualization from '../components/BreakdownVisualization';
+import { ProgressBar } from '../components/ProgressBar';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
 
@@ -41,6 +42,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 	}, []);
 
 	const minutesEarnedToday = 105;
+	const allowanceMinutes = 60;
+	const allowanceMinutesUsed = 60;
+	const percentAllowanceMinutesUsed =
+		(allowanceMinutesUsed / allowanceMinutes) * 100;
+	const earnedExtraMinutes = minutesEarnedToday;
+	const earnedExtraMinutesUsed = 52;
+	const percentEarnedExtraMinutesUsed =
+		(earnedExtraMinutesUsed / earnedExtraMinutes) * 100;
 
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -62,7 +71,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 						</Section>
 					</TouchableOpacity>
 					<Section title="Screen time">
-						<Text>Screen time content here</Text>
+						<Text style={styles.screenTimeSubtitle}>Allowance</Text>
+						<ProgressBar
+							progress={percentAllowanceMinutesUsed}
+							color={theme.colors.blue}
+						/>
+						<Text>
+							{allowanceMinutesUsed} / {allowanceMinutes} minutes used
+						</Text>
+						<Text style={styles.screenTimeSubtitle}>Earned extra</Text>
+						<ProgressBar
+							progress={percentEarnedExtraMinutesUsed}
+							color={theme.colors.blue}
+						/>
+						<Text>
+							{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
+						</Text>
 					</Section>
 				</SectionContainer>
 			</View>
@@ -78,5 +102,10 @@ const styles = StyleSheet.create({
 	welcomeTextContainer: {
 		padding: 20,
 		paddingBottom: 10,
+	},
+	screenTimeSubtitle: {
+		fontSize: theme.fontSize.smaller,
+		color: theme.colors.text,
+		marginVertical: 8,
 	},
 });
