@@ -72,7 +72,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
 	header: {
 		fontSize: theme.fontSize.large,
-		fontFamily: 'HarmonyOS Sans, Regular',
+		fontFamily: theme.font.regular,
 		color: theme.colors.text,
 	},
 	welcomeTextContainer: {

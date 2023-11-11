@@ -14,4 +14,7 @@ export default {
 		small: 22,
 		xsmall: 16,
 	},
+	font: {
+		regular: 'HarmonyOS_Sans_Regular',
+	},
 };

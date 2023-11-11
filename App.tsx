@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
 	header: {
 		padding: 20,
 		fontSize: 30,
-		fontFamily: 'HarmonyOS Sans, Regular',
+		fontFamily: theme.font.regular,
 		color: theme.colors.text,
 	},
 	text: {
 		fontSize: 14,
-		fontFamily: 'HarmonyOS Sans, Regular',
+		fontFamily: theme.font.regular,
 		color: theme.colors.text,
 	},
 	sectionContainer: {
