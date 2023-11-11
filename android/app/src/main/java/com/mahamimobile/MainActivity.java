@@ -1,7 +1,14 @@
 package com.mahamimobile;
 
 // React Navigation
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -32,9 +39,17 @@ public class MainActivity extends ReactActivity {
         // If you opted-in for the New Architecture, we enable the Fabric Renderer.
         DefaultNewArchitectureEntryPoint.getFabricEnabled());
   }
+
   // React Navigation
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
+
+    WorkRequest uploadWorkRequest =
+            new OneTimeWorkRequest.Builder(MainWorker.class)
+                    .build();
+    WorkManager
+            .getInstance(getApplicationContext())
+            .enqueue(uploadWorkRequest);
   }
 }

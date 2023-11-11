@@ -98,7 +98,7 @@ public class StepModule extends ReactContextBaseJavaModule {
         sensorManager.registerListener(new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
-                Log.i("steps", "Event!!");
+                Log.i("mahami", "Event!!");
                 WritableMap params = Arguments.createMap();
                 params.putDouble("steps", sensorEvent.values[0]);
                 sendEvent("stepsChanged", params);
