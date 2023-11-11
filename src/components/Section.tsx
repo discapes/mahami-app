@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, StyleProp, TextStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
 import type { PropsWithChildren } from 'react';
 import theme from '../../theme';
@@ -25,7 +25,7 @@ export default function Section({
 				<Text style={textStyle}>
 					{title} {icon}
 				</Text>
-				<Text style={styles.sectionTitle}>{data}</Text>
+				<Text style={[styles.sectionTitle, textStyle]}>{data}</Text>
 			</View>
 			<View style={styles.sectionDescription}>{children}</View>
 		</View>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 	sectionContainer: {
 		padding: 12,
 		backgroundColor: theme.colors.element,
-		borderRadius: 20,
+		borderRadius: 8,
 	},
 	sectionHeader: {
 		display: 'flex',
@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
 		color: theme.colors.text,
 	},
 	sectionDescription: {
-		marginTop: 8,
+		marginTop: 10,
 		fontSize: 18,
-		color: theme.colors.text,
+		color: theme.colors.secondaryText,
 	},
 	highlight: {
 		fontWeight: '700',
