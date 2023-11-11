@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -32,14 +32,6 @@ export default function App(): JSX.Element {
 					<Stack.Screen name="Home" component={HomeScreen} />
 					<Stack.Screen name="Minutes" component={MinutesScreen} />
 				</Stack.Navigator>
-
-				<View
-					style={{
-						backgroundColor: theme.colors.element,
-						height: '10%',
-					}}>
-					<Text>Moi</Text>
-				</View>
 			</SafeAreaView>
 		</NavigationContainer>
 	);
