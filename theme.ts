@@ -3,6 +3,7 @@ export default {
 		background: '#E5E5E5',
 		element: '#FFFFFF',
 		text: '#000000',
+		textInverse: '#ffffff',
 		blue: '#317AF7',
 		orange: '#FB8C00',
 		green: '#A5D61D',
