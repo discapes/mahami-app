@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 	sectionContainer: {
 		padding: 12,
 		backgroundColor: theme.colors.element,
-		borderRadius: 20,
+		borderRadius: 10,
 	},
 	sectionHeader: {
 		display: 'flex',
