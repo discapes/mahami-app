@@ -11,8 +11,10 @@ import {
 	NativeEventEmitter,
 } from 'react-native';
 
-import { NavigationContainer } from "@react-navigation/native";
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Colors from './Colors';
+import Points from './Points';
 const {StepModule} = NativeModules;
 
 type SectionProps = PropsWithChildren<{
@@ -26,7 +28,7 @@ function Section({children, title}: SectionProps): JSX.Element {
 				style={[
 					styles.sectionTitle,
 					{
-						color: Colors.black,
+						color: Colors.text,
 					},
 				]}>
 				{title}
@@ -35,7 +37,7 @@ function Section({children, title}: SectionProps): JSX.Element {
 				style={[
 					styles.sectionDescription,
 					{
-						color: Colors.dark,
+						color: Colors.text,
 					},
 				]}>
 				{children}
@@ -44,7 +46,38 @@ function Section({children, title}: SectionProps): JSX.Element {
 	);
 }
 
+const Stack = createNativeStackNavigator();
+
 export default function App(): JSX.Element {
+	return (
+		<NavigationContainer>
+			<SafeAreaView
+				style={{
+					backgroundColor: Colors.background,
+					flex: 1,
+				}}>
+				<StatusBar
+					barStyle={'dark-content'}
+					backgroundColor={Colors.background}
+				/>
+				<Stack.Navigator initialRouteName="Home">
+					<Stack.Screen name="Home" component={Home} />
+					<Stack.Screen name="Points" component={Points} />
+				</Stack.Navigator>
+
+				<View
+					style={{
+						backgroundColor: Colors.element,
+						height: '10%',
+					}}>
+						<Text>Moi</Text>
+					</View>
+			</SafeAreaView>
+		</NavigationContainer>
+	);
+}
+
+function Home(): JSX.Element {
 	const [usage, setUsage] = useState<string[]>([]);
 	const [steps, setSteps] = useState<number | 'loading steps...'>(
 		'loading steps...',
@@ -64,34 +97,25 @@ export default function App(): JSX.Element {
 		};
 	}, []);
 
-	return (	
-		<NavigationContainer>
-		<SafeAreaView
-			style={{
-				backgroundColor: Colors.lighter,
-				flex: 1,
-			}}>
-			<StatusBar barStyle={'dark-content'} backgroundColor={Colors.lighter} />
-			<ScrollView contentInsetAdjustmentBehavior="automatic">
-				<View>
-					<Text style={styles.header}>
-						Great Job, Bob You have earned 34 minutes extra screen time today!
-					</Text>
-					<Section title="Steps">{steps}</Section>
-					<Section title="Usage">
-						Top 10 packages (unsorted):
-						<View style={{gap: 3, padding: 10}}>
-							{usage.slice(0, 10).map(pkg => (
-								<Text key={pkg} style={styles.text}>
-									Name: {pkg}
-								</Text>
-							))}
-						</View>
-					</Section>
-				</View>
-			</ScrollView>
-		</SafeAreaView>
-		</NavigationContainer>
+	return (
+		<ScrollView contentInsetAdjustmentBehavior="automatic">
+			<View>
+				<Text style={styles.header}>
+					Great Job, Bob You have earned 34 minutes extra screen time today!
+				</Text>
+				<Section title="Steps">{steps}</Section>
+				<Section title="Usage">
+					Top 10 packages (unsorted):
+					<View style={{gap: 3, padding: 10}}>
+						{usage.slice(0, 10).map(pkg => (
+							<Text key={pkg} style={styles.text}>
+								Name: {pkg}
+							</Text>
+						))}
+					</View>
+				</Section>
+			</View>
+		</ScrollView>
 	);
 }
 
@@ -100,16 +124,19 @@ const styles = StyleSheet.create({
 		padding: 20,
 		fontSize: 30,
 		fontFamily: 'HarmonyOS Sans, Regular',
-		color: Colors.dark,
+		color: Colors.text,
 	},
 	text: {
 		fontSize: 14,
 		fontFamily: 'HarmonyOS Sans, Regular',
-		color: Colors.dark,
+		color: Colors.text,
 	},
 	sectionContainer: {
 		marginTop: 32,
 		paddingHorizontal: 24,
+		backgroundColor: Colors.element,
+		margin: 20,
+		borderRadius: 100,
 	},
 	sectionTitle: {
 		fontSize: 24,
