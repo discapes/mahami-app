@@ -4,6 +4,8 @@ import theme from '../../theme';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
 
+import moon from '../../assets/img/moon.svg';
+
 export default function PointsScreen(): JSX.Element {
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
