@@ -1,14 +1,22 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import theme from '../../theme';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Basketball from '../../assets/img/basketball';
 import Moon from '../../assets/img/moon';
 import Shoe from '../../assets/img/shoe';
-import Basketball from '../../assets/img/basketball'
+import MyText from '../components/MyText';
 
-export default function PointsScreen(): JSX.Element {
+interface MinutesScreenProps {
+	navigation: NativeStackNavigationProp<RootStackParamList, 'Minutes'>;
+}
+
+export const MinutesScreen: React.FC<MinutesScreenProps> = ({
+	navigation,
+}): JSX.Element => {
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			<View>
@@ -18,44 +26,45 @@ export default function PointsScreen(): JSX.Element {
 						icon={<Moon />}
 						titleStyle={{ color: theme.colors.blue }}
 						data="45 minutes">
-						<Text style={styles.text}>
+						<MyText style={styles.text}>
 							Your sleep score for the last night was 86 which earns you{' '}
-							<Text style={{ color: theme.colors.blue }}>45</Text> minutes
-						</Text>
+							<MyText style={{ color: theme.colors.blue }}>45</MyText> minutes
+						</MyText>
 					</Section>
 					<Section
 						title="Steps"
 						icon={<Shoe />}
 						titleStyle={{ color: theme.colors.green }}
 						data="39 minutes">
-						<Text style={styles.text}>
+						<MyText style={styles.text}>
 							You have taken 5914 steps today, which earns you{' '}
-							<Text style={{ color: theme.colors.green }}> 39</Text> minutes
-						</Text>
+							<MyText style={{ color: theme.colors.green }}> 39</MyText> minutes
+						</MyText>
 					</Section>
 					<Section
 						title="Excercise"
 						icon={<Basketball />}
 						titleStyle={{ color: theme.colors.orange }}
 						data="20 minutes">
-						<Text style={styles.text}>
+						<MyText style={styles.text}>
 							You have completed 63% of your excercise goal, which earns you{' '}
-							<Text style={{ color: theme.colors.orange }}>20</Text> minutes.
-						</Text>
+							<MyText style={{ color: theme.colors.orange }}>20</MyText>{' '}
+							minutes.
+						</MyText>
 					</Section>
 					<Section title="How it works">
-						<Text style={styles.text}>
+						<MyText style={styles.text}>
 							You can earn more screen time by completing activities, walking
 							and meeting other goals that you have agreed upon together wtih
 							your guardian. {'\n\n'}Your guardian can set a screentime limit
 							and change how you get points.
-						</Text>
+						</MyText>
 					</Section>
 				</SectionContainer>
 			</View>
 		</ScrollView>
 	);
-}
+};
 const styles = StyleSheet.create({
 	text: {
 		fontSize: 14,

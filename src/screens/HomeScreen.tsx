@@ -5,7 +5,6 @@ import {
 	NativeModules,
 	ScrollView,
 	StyleSheet,
-	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native';
@@ -18,6 +17,7 @@ import SectionContainer from '../components/SectionContainer';
 const { StepModule } = NativeModules;
 
 import ConfettiCannon from 'react-native-confetti-cannon';
+import MyText from '../components/MyText';
 
 interface HomeScreenProps {
 	navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
@@ -57,14 +57,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			<View>
 				<View style={styles.welcomeTextContainer}>
-					<Text style={styles.header}>Great job, Bob 🎉</Text>
-					<Text style={styles.header}>
+					<MyText style={styles.header}>Great job, Bob 🎉</MyText>
+					<MyText style={styles.header}>
 						You have earned{' '}
-						<Text style={{ fontWeight: 'bold', color: theme.colors.blue }}>
+						<MyText style={{ fontWeight: 'bold', color: theme.colors.blue }}>
 							{minutesEarnedToday} minutes
-						</Text>{' '}
+						</MyText>{' '}
 						extra screen time today!
-					</Text>
+					</MyText>
 				</View>
 				<SectionContainer>
 					<TouchableOpacity onPress={() => navigation.navigate('Minutes')}>
@@ -73,22 +73,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 						</Section>
 					</TouchableOpacity>
 					<Section title="Screen time">
-						<Text style={styles.screenTimeSubtitle}>Allowance</Text>
+						<MyText style={styles.screenTimeSubtitle}>Allowance</MyText>
 						<ProgressBar
 							progress={percentAllowanceMinutesUsed}
 							color={theme.colors.blue}
 						/>
-						<Text style={styles.progressText}>
+						<MyText style={styles.progressText}>
 							{allowanceMinutesUsed} / {allowanceMinutes} minutes used
-						</Text>
-						<Text style={styles.screenTimeSubtitle}>Earned extra</Text>
+						</MyText>
+						<MyText style={styles.screenTimeSubtitle}>Earned extra</MyText>
 						<ProgressBar
 							progress={percentEarnedExtraMinutesUsed}
 							color={theme.colors.blue}
 						/>
-						<Text style={styles.progressText}>
+						<MyText style={styles.progressText}>
 							{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
-						</Text>
+						</MyText>
 					</Section>
 					<TouchableOpacity onPress={() => navigation.navigate('Parental')}>
 						<Section title="Parental Controls"/>
@@ -108,7 +108,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
 	header: {
 		fontSize: theme.fontSize.large,
-		fontFamily: theme.font.regular,
 		color: theme.colors.text,
 	},
 	welcomeTextContainer: {

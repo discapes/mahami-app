@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './src/screens/HomeScreen';
 import ParentalControl from './src/screens/ParentalControl';
-import MinutesScreen from './src/screens/MinutesScreen';
+import { MinutesScreen } from './src/screens/MinutesScreen';
 import theme from './theme';
 
 type SectionProps = PropsWithChildren<{
@@ -27,11 +27,32 @@ export default function App(): JSX.Element {
 					barStyle={'dark-content'}
 					backgroundColor={theme.colors.background}
 				/>
-				<Stack.Navigator
-					initialRouteName="Home">
-					<Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-					<Stack.Screen options={{ title: 'Earned minutes', headerTitleStyle: styles.header, headerShadowVisible: false, headerStyle: {backgroundColor: theme.colors.background}}}name="Minutes" component={MinutesScreen} />
-					<Stack.Screen options={{ title: 'Parental Controls', headerTitleStyle: styles.header, headerShadowVisible: false, headerStyle: {backgroundColor: theme.colors.background}}} name="Parental" component={ParentalControl} />
+				<Stack.Navigator initialRouteName="Home">
+					<Stack.Screen
+						options={{ headerShown: false }}
+						name="Home"
+						component={HomeScreen}
+					/>
+					<Stack.Screen
+						options={{
+							title: 'Earned minutes',
+							headerTitleStyle: styles.header,
+							headerShadowVisible: false,
+							headerStyle: { backgroundColor: theme.colors.background },
+						}}
+						name="Minutes"
+						component={MinutesScreen}
+					/>
+					<Stack.Screen
+						options={{
+							title: 'Parental Controls',
+							headerTitleStyle: styles.header,
+							headerShadowVisible: false,
+							headerStyle: { backgroundColor: theme.colors.background },
+						}}
+						name="Parental"
+						component={ParentalControl}
+					/>
 				</Stack.Navigator>
 			</SafeAreaView>
 		</NavigationContainer>
