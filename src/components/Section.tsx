@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
+import { StyleSheet, Text, View, StyleProp, TextStyle } from 'react-native';
 
 import type { PropsWithChildren } from 'react';
 import theme from '../../theme';
@@ -16,11 +16,14 @@ export default function Section({
 	data,
 	titleStyle,
 }: SectionProps): JSX.Element {
-	const textStyle = StyleSheet.compose(styles.sectionTitle, titleStyle);
+	const textStyle = StyleSheet.compose(styles.sectionTitle, titleStyle)
 	return (
 		<View style={styles.sectionContainer}>
-			<Text style={styles.sectionTitle}>{title}</Text>
-			<View style={styles.sectionChildrenRoot}>{children}</View>
+			<View style={styles.sectionHeader}>
+				<Text style={textStyle}>{title}</Text>
+				<Text style={styles.sectionTitle}>{data}</Text>
+			</View>
+			<View style={styles.sectionDescription}>{children}</View>
 		</View>
 	);
 }
@@ -29,25 +32,21 @@ const styles = StyleSheet.create({
 	sectionContainer: {
 		padding: 12,
 		backgroundColor: theme.colors.element,
-		borderRadius: 10,
-		flex: 1,
-		alignContent: 'stretch',
+		borderRadius: 20,
 	},
 	sectionHeader: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		flexDirection: 'row',
+		flexDirection: "row"
 	},
 	sectionTitle: {
 		fontSize: 24,
 		color: theme.colors.text,
-		marginVertical: 5,
 	},
-	sectionChildrenRoot: {
+	sectionDescription: {
 		marginTop: 8,
 		fontSize: 18,
 		color: theme.colors.text,
-		alignContent: 'stretch',
 	},
 	highlight: {
 		fontWeight: '700',
