@@ -1,3 +1,4 @@
+import { Picker } from '@react-native-picker/picker';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import {
@@ -17,6 +18,7 @@ import SectionContainer from '../components/SectionContainer';
 const { StepModule } = NativeModules;
 
 import ConfettiCannon from 'react-native-confetti-cannon';
+import { Leaderboard } from '../components/Leaderboard';
 import MyText from '../components/MyText';
 
 interface HomeScreenProps {
@@ -28,6 +30,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 	const [steps, setSteps] = useState<number | 'loading steps...'>(
 		'loading steps...',
 	);
+
+	const [selectedLeaderboardUser, setSelectedLeaderboardUser] =
+		useState<string>('bob');
 	useEffect(() => {
 		StepModule.getUsage().then(setUsage);
 
@@ -92,6 +97,26 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							</MyText>
 						</Section>
 					</TouchableOpacity>
+					<Section title="Leaderboard">
+						<Leaderboard selectedUser={selectedLeaderboardUser} />
+						<Picker
+							selectedValue={selectedLeaderboardUser}
+							onValueChange={(itemValue, itemIndex) =>
+								setSelectedLeaderboardUser(itemValue)
+							}>
+							<Picker.Item label="Alice" value="alice" />
+							<Picker.Item label="Bob" value="bob" />
+							<Picker.Item label="Charlie" value="charlie" />
+							<Picker.Item label="Diana" value="diana" />
+							<Picker.Item label="Ethan" value="ethan" />
+							<Picker.Item label="Fiona" value="fiona" />
+							<Picker.Item label="George" value="george" />
+							<Picker.Item label="Hannah" value="hannah" />
+							<Picker.Item label="Ivy" value="ivy" />
+							<Picker.Item label="Jack" value="jack" />
+						</Picker>
+						<MyText>Selected user</MyText>
+					</Section>
 				</SectionContainer>
 				{minutesEarnedToday > 50 && (
 					<ConfettiCannon
