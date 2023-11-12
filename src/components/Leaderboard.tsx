@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { StyleSheet, TextProps, View } from 'react-native';
+import theme from '../../theme';
 import MyText from './MyText';
 
 const LeaderboardText: PropsWithChildren<TextProps> = ({
@@ -41,26 +42,33 @@ const leaderboardData: LeaderboardEntry[] = [
 export const Leaderboard: React.FC<LeaderboardProps> = ({
 	selectedUser,
 }): JSX.Element => {
-	const isSelected = (name: string) =>
+	const isSelectedText = (name: string) =>
 		name.toLowerCase() === selectedUser.toLowerCase()
-			? styles.selectedName
+			? { color: theme.colors.textInverse }
 			: null;
 
 	return (
 		<View style={{ flexDirection: 'column' }}>
 			{leaderboardData.map(({ rank, name, points }) => (
-				<View key={rank} style={styles.row}>
-					<View>
-						<LeaderboardText style={isSelected(name)}>{rank}. </LeaderboardText>
-					</View>
-					<View>
-						<LeaderboardText style={isSelected(name)}>{name}</LeaderboardText>
-					</View>
-					<View>
-						<LeaderboardText style={isSelected(name)}>
-							{points} pts
-						</LeaderboardText>
-					</View>
+				<View
+					key={rank}
+					style={[
+						styles.row,
+						name.toLowerCase() === selectedUser.toLowerCase()
+							? styles.selectedRow
+							: null,
+					]}>
+					<LeaderboardText style={isSelectedText(name)}>
+						{' '}
+						{rank}.{' '}
+					</LeaderboardText>
+					<LeaderboardText style={isSelectedText(name)}>
+						{name.toLowerCase() === selectedUser.toLowerCase() ? 'You' : name}
+					</LeaderboardText>
+					<LeaderboardText style={isSelectedText(name)}>
+						{' '}
+						{points} pts{' '}
+					</LeaderboardText>
 				</View>
 			))}
 		</View>
@@ -71,12 +79,13 @@ const styles = StyleSheet.create({
 	row: {
 		justifyContent: 'space-between',
 		flexDirection: 'row',
-		marginVertical: 5,
+		padding: 3,
 	},
 	name: {
 		alignSelf: 'flex-start',
 	},
-	selectedName: {
-		fontWeight: 'bold',
+	selectedRow: {
+		backgroundColor: theme.colors.blue,
+		borderRadius: 4,
 	},
 });

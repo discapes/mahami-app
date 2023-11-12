@@ -58,6 +58,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 	const percentEarnedExtraMinutesUsed =
 		(earnedExtraMinutesUsed / earnedExtraMinutes) * 100;
 
+	const points = 12175;
+
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			<View>
@@ -97,6 +99,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							</MyText>
 						</Section>
 					</TouchableOpacity>
+					<Section title={'Your points: ' + points}></Section>
 					<Section title="Leaderboard">
 						<Leaderboard selectedUser={selectedLeaderboardUser} />
 						<Picker
@@ -115,7 +118,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							<Picker.Item label="Ivy" value="ivy" />
 							<Picker.Item label="Jack" value="jack" />
 						</Picker>
-						<MyText>Selected user</MyText>
 					</Section>
 				</SectionContainer>
 				{minutesEarnedToday > 50 && (
