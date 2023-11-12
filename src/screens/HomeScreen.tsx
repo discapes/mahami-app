@@ -20,7 +20,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import MyText from '../components/MyText';
 
 interface HomeScreenProps {
-	navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
+	navigation: NativeStackNavigationProp<RootStackParamList>;
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
@@ -72,26 +72,25 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							<BreakdownVisualization sleep={45} exercise={20} steps={39} />
 						</Section>
 					</TouchableOpacity>
-					<Section title="Screen time">
-						<MyText style={styles.screenTimeSubtitle}>Allowance</MyText>
-						<ProgressBar
-							progress={percentAllowanceMinutesUsed}
-							color={theme.colors.blue}
-						/>
-						<MyText style={styles.progressText}>
-							{allowanceMinutesUsed} / {allowanceMinutes} minutes used
-						</MyText>
-						<MyText style={styles.screenTimeSubtitle}>Earned extra</MyText>
-						<ProgressBar
-							progress={percentEarnedExtraMinutesUsed}
-							color={theme.colors.blue}
-						/>
-						<MyText style={styles.progressText}>
-							{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
-						</MyText>
-					</Section>
-					<TouchableOpacity onPress={() => navigation.navigate('Parental')}>
-						<Section title="Parental Controls"/>
+					<TouchableOpacity onPress={() => navigation.navigate('Profiles')}>
+						<Section title="Screen time">
+							<MyText style={styles.screenTimeSubtitle}>Allowance</MyText>
+							<ProgressBar
+								progress={percentAllowanceMinutesUsed}
+								color={theme.colors.blue}
+							/>
+							<MyText style={styles.progressText}>
+								{allowanceMinutesUsed} / {allowanceMinutes} minutes used
+							</MyText>
+							<MyText style={styles.screenTimeSubtitle}>Earned extra</MyText>
+							<ProgressBar
+								progress={percentEarnedExtraMinutesUsed}
+								color={theme.colors.blue}
+							/>
+							<MyText style={styles.progressText}>
+								{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
+							</MyText>
+						</Section>
 					</TouchableOpacity>
 				</SectionContainer>
 				{minutesEarnedToday > 50 && (

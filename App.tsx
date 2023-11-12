@@ -7,7 +7,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './src/screens/HomeScreen';
 import ParentalControl from './src/screens/ParentalControl';
 import { MinutesScreen } from './src/screens/MinutesScreen';
+import { ImageScreen } from './src/screens/ImageScreen';
 import theme from './theme';
+import { Image } from 'react-native-svg';
 
 type SectionProps = PropsWithChildren<{
 	title: string;
@@ -52,6 +54,16 @@ export default function App(): JSX.Element {
 						}}
 						name="Parental"
 						component={ParentalControl}
+					/>
+					<Stack.Screen
+						options={{
+							title: 'Profiles',
+							headerTitleStyle: styles.header,
+							headerShadowVisible: false,
+							headerStyle: { backgroundColor: theme.colors.background },
+						}}
+						name="Profiles"
+						component={ImageScreen}
 					/>
 				</Stack.Navigator>
 			</SafeAreaView>
