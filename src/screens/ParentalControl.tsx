@@ -1,27 +1,34 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import theme from '../../theme';
-import Section from '../components/Section';
-import SectionContainer from '../components/SectionContainer';
+import {
+	View,
+	Image,
+	ScrollView,
+	TouchableOpacity,
+	Dimensions,
+} from 'react-native';
+import Section from '../../src/components/Section';
 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export default function ParentalControl(): JSX.Element {
+interface MinutesScreenProps {
+	navigation: NativeStackNavigationProp<RootStackParamList, 'Parental'>;
+}
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const ParentalControl: React.FC<MinutesScreenProps> = ({
+	navigation,
+}): JSX.Element => {
 	return (
-		<ScrollView contentInsetAdjustmentBehavior="automatic">
-			<View>
-				<SectionContainer>
-					<Section title="moi">
-
-                    </Section>
-				</SectionContainer>
-			</View>
+		<ScrollView>
+			<Image
+				style={{ width: windowWidth, height: windowHeight }}
+				source={require('../../assets/img/parental.png')}></Image>
+			<TouchableOpacity onPress={() => navigation.navigate('Parental')}>
+				<Section title="Parental Controls" />
+			</TouchableOpacity>
 		</ScrollView>
 	);
-}
-const styles = StyleSheet.create({
-	text: {
-		fontSize: 14,
-		fontFamily: theme.font.regular,
-		color: theme.colors.text,
-	},
-});
+};
+export default ParentalControl;
