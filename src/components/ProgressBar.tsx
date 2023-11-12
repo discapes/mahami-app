@@ -1,4 +1,3 @@
-import React from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import theme from '../../theme';
 
@@ -18,7 +17,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 					StyleSheet.absoluteFill,
 					{
 						backgroundColor: color,
-						width: `${progress}%`,
+						width: `${Math.min(progress * 100, 100)}%`,
 						borderRadius: 50,
 					},
 				]}

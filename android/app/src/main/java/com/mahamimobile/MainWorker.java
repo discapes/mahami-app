@@ -42,9 +42,13 @@ public class MainWorker extends Worker {
         ctx.startActivity(intent);
     }
 
+    private static boolean workerStarted = false;
 
     @Override
     public Result doWork() {
+        if (workerStarted) return Result.success();
+        else workerStarted = true;
+
         Log.i("mahami", "Starting main worker...");
         setForegroundAsync(createForegroundInfo());
 
@@ -52,12 +56,16 @@ public class MainWorker extends Worker {
         Settings settings = Settings.GLOBAL_SETTINGS;
         DataCalculation dc = new DataCalculation(settings, dp);
 
+        int ticks = 0;
         while (true) {
             Log.i("mahami", "tick from bg thread");
-            if (dc.isOutOfTIme())
+            if (dc.screentimeLeft() <= 0)
                 interrupt();
-            if (MainApplication.stepModule != null)
-                MainApplication.stepModule.sendEvent("stepsChanged", dc.getData());
+            if (ticks % 10 == 0) {
+                if (MainApplication.stepModule != null)
+                    MainApplication.stepModule.sendEvent("dataChanged", dc.getData());
+            }
+            ticks++;
             SystemClock.sleep(200);
         }
     }

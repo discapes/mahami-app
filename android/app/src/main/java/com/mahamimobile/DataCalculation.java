@@ -4,50 +4,58 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 
 public class DataCalculation {
-    private final Settings settings;
+    private final Settings userSettings;
     private final DataProvider dp;
 
-    public DataCalculation(Settings settings, DataProvider dp) {
-        this.settings = settings;
+    public DataCalculation(Settings userSettings, DataProvider dp) {
+        this.userSettings = userSettings;
         this.dp = dp;
     }
 
-    private int calcEarnedPoints(Settings s) {
-        int sleepPoints = Math.min(dp.getSleepMinutes() / s.sleepGoal, 1) * s.sleepReward;
-        int stepPoints = Math.min(dp.getSteps() / s.stepGoal, 1) * s.stepReward;
-        int exercisePoints = Math.min(dp.getExerciseMinutes() / s.exerciseGoal, 1) * s.exerciseReward;
-        return sleepPoints + stepPoints + exercisePoints;
+    private int screentimeFromSleep(Settings settings) {
+        return Math.min((dp.getSleepMinutes() * settings.sleepReward) / settings.sleepGoal, settings.sleepReward);
     }
-
-    public int minutesEarned() {
-        return calcEarnedPoints(settings);
+    private int screentimeFromExercise(Settings settings) {
+        return Math.min((dp.getExerciseMinutes() * settings.exerciseReward) / settings.exerciseGoal, settings.exerciseReward);
     }
-
-    public int pointsEarned() {
-        return calcEarnedPoints(Settings.GLOBAL_SETTINGS);
+    private int screentimeFromSteps(Settings settings) {
+        return Math.min((dp.getSteps() * settings.stepReward) / settings.stepGoal, settings.stepReward);
+    }
+    private int screentimeEarned(Settings s) {
+        return screentimeFromExercise(s) + screentimeFromSleep(s) + screentimeFromSteps(s);
+    }
+    private int pointsEarned() {
+        return screentimeEarned(Settings.GLOBAL_SETTINGS);
     }
 
     public static int clamp(int min, int val, int max) {
         return Math.max(min, Math.min(val, max));
     }
 
-    public int minutesLeft() {
-        int minutesAvailable = clamp(settings.minScreenMinutes, this.minutesEarned() ,settings.maxScreenMinutes);
-        return minutesAvailable - dp.getScreenMinutes();
-    }
-
-    public boolean isOutOfTIme() {
-        return minutesLeft() <= 0;
+    public int screentimeLeft() {
+        return Math.min(userSettings.minScreenMinutes + screentimeEarned(userSettings),
+                userSettings.maxScreenMinutes) - dp.getScreenMinutes();
     }
 
     public WritableMap getData() {
         WritableMap map = Arguments.createMap();
-        map.putInt("minutesEarned", minutesEarned());
+        map.putInt("exerciseDone", dp.getExerciseMinutes());
+        map.putInt("sleepDone", dp.getSleepMinutes());
+        map.putInt("stepsDone", dp.getSteps());
+
+        map.putInt("exerciseGoal", userSettings.exerciseGoal);
+        map.putInt("sleepGoal", userSettings.sleepGoal);
+        map.putInt("stepGoal", userSettings.stepGoal);
+
+        map.putInt("screentimeFromExercise", screentimeFromExercise(userSettings));
+        map.putInt("screentimeFromSleep", screentimeFromSleep(userSettings));
+        map.putInt("screentimeFromSteps", screentimeFromSteps(userSettings));
+        map.putInt("screentimeEarned", screentimeEarned(userSettings));
+        map.putInt("freeScreentime", userSettings.minScreenMinutes);
+        map.putInt("maxScreentime", userSettings.maxScreenMinutes);
+        map.putInt("screentimeUsed", dp.getScreenMinutes());
+
         map.putInt("pointsEarned", pointsEarned());
-        map.putInt("steps", dp.getSteps());
-        map.putInt("sleepMinutes", dp.getSleepMinutes());
-        map.putInt("exerciseMinutes", dp.getExerciseMinutes());
-        map.putInt("minutesLeft", minutesLeft());
         return map;
     }
 }

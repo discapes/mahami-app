@@ -28,21 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
-
-    public static Handler mqProcessor = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            // Process messages here based on message type
-            switch (msg.what) {
-                case 0:
-                    Log.i("mahami", "Message type 1 received");
-                    if (stepModule != null)
-                     stepModule.sendEvent("stepsChanged", Arguments.createMap());
-                    break;
-            }
-        }
-    };
-
+    
     static StepModule stepModule = null;
 
     private ReactNativeHost reactNativeHost = new DefaultReactNativeHost(this) {

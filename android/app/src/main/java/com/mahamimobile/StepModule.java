@@ -90,7 +90,7 @@ public class StepModule extends ReactContextBaseJavaModule {
                 Log.i("mahami", "Event!!");
                 WritableMap params = Arguments.createMap();
                 params.putDouble("steps", sensorEvent.values[0]);
-                sendEvent("stepsChanged", params);
+                sendEvent("dataChanged", params);
             }
 
             @Override

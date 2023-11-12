@@ -1,105 +1,79 @@
 import { Picker } from '@react-native-picker/picker';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	NativeEventEmitter,
 	NativeModules,
 	ScrollView,
 	StyleSheet,
+	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native';
 import theme from '../../theme';
-import BreakdownVisualization from '../components/BreakdownVisualization';
 import { ProgressBar } from '../components/ProgressBar';
 import Section from '../components/Section';
 import SectionContainer from '../components/SectionContainer';
 
 const { StepModule } = NativeModules;
 
-import ConfettiCannon from 'react-native-confetti-cannon';
 import { Leaderboard } from '../components/Leaderboard';
 import MyText from '../components/MyText';
+import { FitnessDisplay } from '../components/FitnessDisplay';
 
 interface HomeScreenProps {
 	navigation: NativeStackNavigationProp<RootStackParamList>;
 }
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-	const [usage, setUsage] = useState<string[]>([]);
-	const [steps, setSteps] = useState<number | 'loading steps...'>(
-		'loading steps...',
-	);
+export type FitnessData = {
+	exerciseDone: number;
+	sleepDone: number;
+	stepsDone: number;
+	exerciseGoal: number;
+	sleepGoal: number;
+	stepGoal: number;
 
+	freeScreentime: number;
+	maxScreentime: number;
+	screentimeEarned: number;
+	screentimeUsed: number;
+	screentimeFromExercise: number;
+	screentimeFromSleep: number;
+	screentimeFromSteps: number;
+
+	pointsEarned: number;
+};
+
+export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+	const [fitnessData, setFitnessData] = useState<FitnessData | null>(null);
 	const [selectedLeaderboardUser, setSelectedLeaderboardUser] =
 		useState<string>('bob');
+
 	useEffect(() => {
-		StepModule.getUsage().then(setUsage);
-
 		const eventEmitter = new NativeEventEmitter(StepModule);
-		let eventListener = eventEmitter.addListener('stepsChanged', e => {
-			console.log(e);
-			setSteps(e.steps);
+		let eventListener = eventEmitter.addListener('dataChanged', e => {
+			console.log(`Received fitness data at ${Date.now().toFixed(0)}:`, e);
+			setFitnessData(e);
 		});
-		console.log('event listener added');
-
+		console.log('Added listener');
 		return () => {
 			eventListener.remove();
 		};
 	}, []);
 
-	const minutesEarnedToday = 105;
-	const allowanceMinutes = 60;
-	const allowanceMinutesUsed = 60;
-	const percentAllowanceMinutesUsed =
-		(allowanceMinutesUsed / allowanceMinutes) * 100;
-	const earnedExtraMinutes = minutesEarnedToday;
-	const earnedExtraMinutesUsed = 52;
-	const percentEarnedExtraMinutesUsed =
-		(earnedExtraMinutesUsed / earnedExtraMinutes) * 100;
-
-	const points = 12175;
-
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
-			<View>
-				<View style={styles.welcomeTextContainer}>
-					<MyText style={styles.header}>Great job, Bob 🎉</MyText>
-					<MyText style={styles.header}>
-						You have earned{' '}
-						<MyText style={{ fontWeight: 'bold', color: theme.colors.blue }}>
-							{minutesEarnedToday} minutes
-						</MyText>{' '}
-						extra screen time today!
-					</MyText>
-				</View>
-				<SectionContainer>
-					<TouchableOpacity onPress={() => navigation.navigate('Minutes')}>
-						<Section title="Earned minutes breakdown">
-							<BreakdownVisualization sleep={45} exercise={20} steps={39} />
-						</Section>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={() => navigation.navigate('Profiles')}>
-						<Section title="Screen time">
-							<MyText style={styles.screenTimeSubtitle}>Allowance</MyText>
-							<ProgressBar
-								progress={percentAllowanceMinutesUsed}
-								color={theme.colors.blue}
-							/>
-							<MyText style={styles.progressText}>
-								{allowanceMinutesUsed} / {allowanceMinutes} minutes used
-							</MyText>
-							<MyText style={styles.screenTimeSubtitle}>Earned extra</MyText>
-							<ProgressBar
-								progress={percentEarnedExtraMinutesUsed}
-								color={theme.colors.blue}
-							/>
-							<MyText style={styles.progressText}>
-								{earnedExtraMinutesUsed} / {earnedExtraMinutes} minutes used
-							</MyText>
-						</Section>
-					</TouchableOpacity>
-					<Section title={'Your points: ' + points}></Section>
+			{fitnessData ? (
+				<View style={{ gap: 20, paddingTop: 10 }}>
+					<FitnessDisplay data={fitnessData}></FitnessDisplay>
+					<Section title="How it works">
+						<MyText style={styles.text}>
+							You can earn more screen time by completing activities, walking
+							and meeting other goals that you have agreed upon together wtih
+							your guardian. {'\n\n'}Your guardian can set a screentime limit
+							and change how you get points.
+						</MyText>
+					</Section>
 					<Section title="Leaderboard">
 						<Leaderboard selectedUser={selectedLeaderboardUser} />
 						<Picker
@@ -119,18 +93,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 							<Picker.Item label="Jack" value="jack" />
 						</Picker>
 					</Section>
-				</SectionContainer>
-				{minutesEarnedToday > 50 && (
-					<ConfettiCannon
-						count={200}
-						origin={{ x: 0, y: 0 }}
-						autoStart={true}
-					/>
-				)}
-			</View>
+				</View>
+			) : (
+				<MyText>Loading...</MyText>
+			)}
 		</ScrollView>
 	);
 };
+
 const styles = StyleSheet.create({
 	header: {
 		fontSize: theme.fontSize.large,
@@ -147,5 +117,11 @@ const styles = StyleSheet.create({
 	},
 	progressText: {
 		marginTop: 6,
+	},
+	text: {
+		fontSize: 16,
+		fontFamily: theme.font.regular,
+		color: theme.colors.text,
+		padding: 10,
 	},
 });

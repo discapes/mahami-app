@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { StyleSheet, TextProps, View } from 'react-native';
 import theme from '../../theme';
 import MyText from './MyText';

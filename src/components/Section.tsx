@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
 import type { PropsWithChildren } from 'react';
@@ -10,6 +9,7 @@ type SectionProps = PropsWithChildren<{
 	icon?: JSX.Element;
 	titleStyle?: StyleProp<TextStyle>;
 	data?: string;
+	padding?: number;
 }>;
 
 export default function Section({
@@ -18,14 +18,16 @@ export default function Section({
 	icon,
 	data,
 	titleStyle,
+	padding = 12,
 }: SectionProps): JSX.Element {
 	const textStyle = StyleSheet.compose(styles.sectionTitle, titleStyle);
 	return (
-		<View style={styles.sectionContainer}>
+		<View style={[styles.sectionContainer, { padding }]}>
 			<View style={styles.sectionHeader}>
-				<MyText style={textStyle}>
-					{title} {icon}
-				</MyText>
+				<View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10 }}>
+					<MyText style={textStyle}>{title}</MyText>
+					<Text style={{ height: 25 }}>{icon}</Text>
+				</View>
 				<Text style={[styles.sectionTitle, textStyle]}>{data}</Text>
 			</View>
 			<View style={styles.sectionDescription}>{children}</View>
@@ -35,7 +37,6 @@ export default function Section({
 
 const styles = StyleSheet.create({
 	sectionContainer: {
-		padding: 12,
 		backgroundColor: theme.colors.element,
 		borderRadius: 8,
 	},
