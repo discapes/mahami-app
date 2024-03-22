@@ -53,8 +53,7 @@ public class MainWorker extends Worker {
         setForegroundAsync(createForegroundInfo());
 
         DataProvider dp = new DataProvider();
-        Settings settings = Settings.GLOBAL_SETTINGS;
-        DataCalculation dc = new DataCalculation(settings, dp);
+        DataCalculation dc = new DataCalculation(Settings.USER_SETTINGS, dp);
 
         int ticks = 0;
         while (true) {

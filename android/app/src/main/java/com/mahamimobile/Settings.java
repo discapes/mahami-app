@@ -25,5 +25,5 @@ public class Settings {
 
     // TODO
     public static final Settings GLOBAL_SETTINGS = new Settings(10,10,10,10,10,10,10,10);
-    public static Settings USER_SETTINGS = new Settings(10,10,10,10,10,10,10,10);
+    public static Settings USER_SETTINGS = new Settings(8*60+30,30,10000,120,60,120,30,60*3);
 }
